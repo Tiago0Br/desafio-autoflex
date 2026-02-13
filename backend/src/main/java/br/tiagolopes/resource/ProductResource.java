@@ -1,9 +1,12 @@
 package br.tiagolopes.resource;
 
 import br.tiagolopes.dto.ProductDTO;
+import br.tiagolopes.dto.ProductionPlanDTO;
 import br.tiagolopes.model.Product;
 import br.tiagolopes.model.ProductComposition;
 import br.tiagolopes.model.RawMaterial;
+import br.tiagolopes.service.ProductionService;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,6 +18,9 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
+    @Inject
+    ProductionService productionService;
+
     @GET
     public List<Product> list() {
         return Product.listAll();
@@ -45,5 +51,11 @@ public class ProductResource {
         product.persist();
 
         return Response.status(Response.Status.CREATED).entity(product).build();
+    }
+
+    @GET
+    @Path("/production-plan")
+    public ProductionPlanDTO getProductionPlan() {
+        return productionService.calculateProductionPlan();
     }
 }

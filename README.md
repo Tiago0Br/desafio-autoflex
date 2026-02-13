@@ -48,13 +48,13 @@ Foco total na API e persistência de dados. Lembre-se: **Código em Inglês**.
 ### 📅 Fase 3: Lógica de Negócio e Associação - Backend (Dia 3)
 O dia mais difícil. Implementar a lógica "inteligente" do sistema.
 
-- [ ] **Funcionalidade de Associação (RF003)**
-    - [ ] Ajustar o `POST /products` ou criar endpoint específico para receber a lista de matérias-primas e quantidades.
-    - [ ] Garantir que ao salvar um produto, as linhas na tabela `ProductComposition` sejam criadas.
-- [ ] **Algoritmo de Produção (RF004)**
-    - [ ] Criar Service `ProductionService`.
-    - [ ] Implementar lógica: Buscar produtos -> Ordenar por valor (Decrescente) -> Verificar estoque -> Calcular Qtd Possível.
-    - [ ] Criar endpoint `GET /products/production-plan` que retorna o JSON com a sugestão de produção e valor total.
+- [X] **Funcionalidade de Associação (RF003)**
+    - [X] Ajustar o `POST /products` ou criar endpoint específico para receber a lista de matérias-primas e quantidades.
+    - [X] Garantir que ao salvar um produto, as linhas na tabela `ProductComposition` sejam criadas.
+- [X] **Algoritmo de Produção (RF004)**
+    - [X] Criar Service `ProductionService`.
+    - [X] Implementar lógica: Buscar produtos -> Ordenar por valor (Decrescente) -> Verificar estoque -> Calcular Qtd Possível.
+    - [X] Criar endpoint `GET /products/production-plan` que retorna o JSON com a sugestão de produção e valor total.
 - [ ] **Testes (Desejável)**
     - [ ] Escrever 1 Teste Unitário (JUnit) para validar o algoritmo de cálculo de produção (mockando o banco).
 
