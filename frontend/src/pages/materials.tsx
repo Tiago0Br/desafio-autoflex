@@ -29,6 +29,7 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   name: z.string().min(2, 'O nome deve ter pelo menos 2 caracteres.'),
@@ -46,7 +47,8 @@ export function MaterialsPage() {
   const form = useForm<MaterialFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: ''
+      name: '',
+      stockQuantity: 0
     }
   })
 
@@ -62,6 +64,7 @@ export function MaterialsPage() {
 
     form.reset()
     setIsOpen(false)
+    toast.success('Matéria-prima cadastrada com sucesso!')
   }
 
   return (

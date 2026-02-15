@@ -3,6 +3,7 @@ import { MainLayout } from './components/layout/main-layout'
 import { DashboardPage } from './pages/dashboard'
 import { ProductsPage } from './pages/products'
 import { MaterialsPage } from './pages/materials'
+import { Toaster } from './components/ui/sonner'
 
 export function App() {
   const router = createBrowserRouter([
@@ -26,5 +27,10 @@ export function App() {
     }
   ])
 
-  return <RouterProvider router={router} />
+  return (
+    <>
+      <Toaster richColors closeButton position="top-center" />
+      <RouterProvider router={router} />
+    </>
+  )
 }
