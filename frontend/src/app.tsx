@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { MainLayout } from './components/main-layout'
+import { MainLayout } from './components/layout/main-layout'
 import { DashboardPage } from './pages/dashboard'
 import { ProductsPage } from './pages/products'
 import { MaterialsPage } from './pages/materials'

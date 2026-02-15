@@ -69,10 +69,10 @@ Começar a dar vida visual ao sistema.
 - [X] **Integração com API**
     - [X] Configurar instância do Axios (baseURL).
     - [ ] Criar Services do Front (`ProductService`, `MaterialService`).
-- [ ] **Tela de Matérias-Primas (Raw Materials)**
-    - [ ] Criar Tabela de listagem.
-    - [ ] Criar Modal ou Página de Cadastro.
-    - [ ] Integrar com o Backend (Listar e Criar).
+- [X] **Tela de Matérias-Primas (Raw Materials)**
+    - [X] Criar Tabela de listagem.
+    - [X] Criar Modal ou Página de Cadastro.
+    - [X] Integrar com o Backend (Listar e Criar).
 
 ---
 

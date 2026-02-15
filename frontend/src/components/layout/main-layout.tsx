@@ -26,9 +26,7 @@ export function MainLayout() {
               to={item.path}
               className={({ isActive }) =>
                 `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
-                  isActive
-                    ? 'bg-primary text-white'
-                    : 'text-slate-300 hover:bg-slate-800'
+                  isActive ? 'bg-primary text-white' : 'text-slate-300 hover:bg-slate-800'
                 }`
               }
             >
