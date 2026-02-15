@@ -63,11 +63,11 @@ O dia mais difícil. Implementar a lógica "inteligente" do sistema.
 ### 📅 Fase 4: Frontend - Estrutura e Cadastros Simples (Dia 4)
 Começar a dar vida visual ao sistema.
 
-- [ ] **Componentes Base**
-    - [ ] Criar Layout Principal (Sidebar + Header + Área de Conteúdo).
-    - [ ] Configurar Rotas (`/`, `/products`, `/materials`, `/production`).
-- [ ] **Integração com API**
-    - [ ] Configurar instância do Axios (baseURL).
+- [X] **Componentes Base**
+    - [X] Criar Layout Principal (Sidebar + Header + Área de Conteúdo).
+    - [X] Configurar Rotas (`/`, `/products`, `/materials`, `/production`).
+- [X] **Integração com API**
+    - [X] Configurar instância do Axios (baseURL).
     - [ ] Criar Services do Front (`ProductService`, `MaterialService`).
 - [ ] **Tela de Matérias-Primas (Raw Materials)**
     - [ ] Criar Tabela de listagem.

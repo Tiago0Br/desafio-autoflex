@@ -12,7 +12,7 @@ export function MainLayout() {
   ]
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-background">
       <aside className="hidden md:flex flex-col w-64 bg-slate-900 text-white">
         <div className="p-4 flex items-center justify-center border-b border-slate-700">
           <h1 className="text-xl font-bold tracking-wider">
@@ -27,7 +27,7 @@ export function MainLayout() {
               className={({ isActive }) =>
                 `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-primary text-white'
                     : 'text-slate-300 hover:bg-slate-800'
                 }`
               }
@@ -58,7 +58,7 @@ export function MainLayout() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={({ isActive }) =>
                   `flex items-center space-x-3 px-4 py-3 rounded-lg ${
-                    isActive ? 'bg-blue-600' : 'hover:bg-slate-700'
+                    isActive ? 'bg-primary' : 'hover:bg-slate-700'
                   }`
                 }
               >
@@ -69,7 +69,7 @@ export function MainLayout() {
           </nav>
         )}
 
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50 p-6">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-6">
           <div className="mx-auto max-w-7xl">
             <Outlet />
           </div>
