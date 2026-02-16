@@ -1,4 +1,5 @@
 import { Trash2Icon } from 'lucide-react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -11,7 +12,13 @@ import {
 import { useMaterialStore } from '../stores/use-material-store'
 
 export function MaterialsTable() {
-  const { materials, isLoading } = useMaterialStore()
+  const { materials, isLoading, deleteMaterial } = useMaterialStore()
+
+  async function handleDelete(materialId: number) {
+    await deleteMaterial(materialId)
+
+    toast.success('Matéria-prima deletada!')
+  }
 
   return (
     <div className="border rounded-lg shadow-sm">
@@ -48,6 +55,7 @@ export function MaterialsTable() {
                     variant="ghost"
                     size="icon"
                     className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                    onClick={() => handleDelete(material.id as number)}
                   >
                     <Trash2Icon className="size-4" />
                   </Button>
