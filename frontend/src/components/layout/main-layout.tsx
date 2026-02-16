@@ -17,7 +17,7 @@ export function MainLayout() {
       <aside className="hidden md:flex flex-col w-64 bg-sidebar border-r border-sidebar-border">
         <div className="p-4 flex items-center justify-center border-b border-sidebar-border">
           <h1 className="text-xl font-bold tracking-wider text-sidebar-foreground">
-            INDÚSTRIA<span className="text-primary">FLEX</span>
+            NEX<span className="text-primary">STOCK</span>
           </h1>
         </div>
         <nav className="flex-1 p-4 space-y-2">
@@ -46,7 +46,7 @@ export function MainLayout() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="md:hidden bg-sidebar border-b border-sidebar-border p-4 flex justify-between items-center">
           <h1 className="text-lg font-bold text-sidebar-foreground">
-            INDÚSTRIA<span className="text-primary">FLEX</span>
+            NEX<span className="text-primary">STOCK</span>
           </h1>
           <button
             type="button"
