@@ -79,14 +79,14 @@ Começar a dar vida visual ao sistema.
 ### 📅 Fase 5: Frontend - Telas Complexas (Dia 5)
 Foco na tela de Produtos, que exige selecionar matérias-primas dinamicamente.
 
-- [ ] **Tela de Produtos (Products)**
-    - [ ] Criar Tabela de listagem de produtos.
-    - [ ] **Formulário de Produto (O Desafio):**
-        - [ ] Campos básicos (Nome, Preço).
-        - [ ] Seção de "Receita": Botão "Adicionar Matéria-Prima".
-        - [ ] Dropdown para selecionar Matéria-Prima + Input de Quantidade.
-        - [ ] Lógica visual para adicionar/remover linhas da receita.
-    - [ ] Enviar o JSON completo para o Backend salvar.
+- [X] **Tela de Produtos (Products)**
+    - [X] Criar Tabela de listagem de produtos.
+    - [X] **Formulário de Produto (O Desafio):**
+        - [X] Campos básicos (Nome, Preço).
+        - [X] Seção de "Receita": Botão "Adicionar Matéria-Prima".
+        - [X] Dropdown para selecionar Matéria-Prima + Input de Quantidade.
+        - [X] Lógica visual para adicionar/remover linhas da receita.
+    - [X] Enviar o JSON completo para o Backend salvar.
 
 ---
 

@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MainLayout } from './components/layout/main-layout'
 import { DashboardPage } from './pages/dashboard'
-import { ProductsPage } from './pages/products'
 import { MaterialsPage } from './features/materials'
 import { Toaster } from './components/ui/sonner'
+import { ProductsPage } from './features/products'
 
 export function App() {
   const router = createBrowserRouter([
