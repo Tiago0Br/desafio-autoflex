@@ -1,35 +1,35 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { PlusIcon, Trash2Icon } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
-  DialogTrigger,
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  Dialog
+  DialogTrigger
 } from '@/components/ui/dialog'
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import {
-  SelectTrigger,
-  SelectValue,
+  Select,
   SelectContent,
   SelectItem,
-  Select
+  SelectTrigger,
+  SelectValue
 } from '@/components/ui/select'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon, Trash2Icon } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { useForm, useFieldArray } from 'react-hook-form'
-import { toast } from 'sonner'
-import { productFormSchema, type ProductFormValues } from '../schemas/product.schema'
-import { useProductStore } from '@/store/use-product-store'
-import { useMaterialStore } from '@/store/use-material-store'
+import { useMaterialStore } from '@/features/materials/stores/use-material-store'
+import { type ProductFormValues, productFormSchema } from '../schemas/product.schema'
+import { useProductStore } from '../stores/use-product-store'
 
 export function ProductFormDialog() {
   const { createProduct } = useProductStore()

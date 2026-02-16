@@ -1,13 +1,13 @@
+import { useEffect } from 'react'
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
-  TableCell
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table'
-import { useProductStore } from '@/store/use-product-store'
-import { useEffect } from 'react'
+import { useProductStore } from '../stores/use-product-store'
 
 export function ProductsTable() {
   const { products, isLoading: isLoadingProducts, fetchProducts } = useProductStore()

@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { useMaterialStore } from '@/store/use-material-store'
+import { useMaterialStore } from '../stores/use-material-store'
 
 export function MaterialsTable() {
   const { materials, isLoading } = useMaterialStore()

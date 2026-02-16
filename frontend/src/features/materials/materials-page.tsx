@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { useMaterialStore } from '@/store/use-material-store'
 import { MaterialFormDialog } from './components/material-form-dialog'
 import { MaterialsTable } from './components/materials-table'
+import { useMaterialStore } from './stores/use-material-store'
 
 export function MaterialsPage() {
   const { fetchMaterials } = useMaterialStore()

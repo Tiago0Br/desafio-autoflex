@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Dialog,
   DialogContent,
@@ -20,8 +19,9 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { useMaterialStore } from '@/store/use-material-store'
-import { materialFormSchema, type MaterialFormValues } from '../schemas/material.schema'
+import { Input } from '@/components/ui/input'
+import { type MaterialFormValues, materialFormSchema } from '../schemas/material.schema'
+import { useMaterialStore } from '../stores/use-material-store'
 
 export function MaterialFormDialog() {
   const [isOpen, setIsOpen] = useState(false)

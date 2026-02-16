@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { api } from '../services/api'
-import type { RawMaterial } from '../types'
+import { api } from '@/services/api'
+import type { RawMaterial } from '@/types'
 
 interface MaterialStore {
   materials: RawMaterial[]
