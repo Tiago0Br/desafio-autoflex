@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -8,8 +8,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger
+  DialogTitle
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -25,12 +24,16 @@ import { type MaterialFormValues, materialFormSchema } from '../schemas/material
 import { useMaterialStore } from '../stores/use-material-store'
 
 interface MaterialFormDialogProps {
-  trigger: React.ReactNode
+  isOpen: boolean
+  onOpenChange: () => void
   material?: RawMaterial
 }
 
-export function MaterialFormDialog({ trigger, material }: MaterialFormDialogProps) {
-  const [isOpen, setIsOpen] = useState(false)
+export function MaterialFormDialog({
+  isOpen,
+  onOpenChange,
+  material
+}: MaterialFormDialogProps) {
   const isEditing = !!material
 
   const { createMaterial, updateMaterial } = useMaterialStore()
@@ -68,12 +71,11 @@ export function MaterialFormDialog({ trigger, material }: MaterialFormDialogProp
     }
 
     form.reset()
-    setIsOpen(false)
+    onOpenChange()
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
           <DialogTitle>Matéria-prima</DialogTitle>
@@ -113,7 +115,7 @@ export function MaterialFormDialog({ trigger, material }: MaterialFormDialogProp
             />
 
             <div className="flex justify-end space-x-2 pt-4">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+              <Button type="button" variant="outline" onClick={onOpenChange}>
                 Cancelar
               </Button>
               <Button type="submit">{isEditing ? 'Atualizar' : 'Salvar'}</Button>

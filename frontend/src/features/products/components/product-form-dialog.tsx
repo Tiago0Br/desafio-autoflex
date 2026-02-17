@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon, Trash2Icon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -9,8 +9,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger
+  DialogTitle
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -34,14 +33,18 @@ import { type ProductFormValues, productFormSchema } from '../schemas/product.sc
 import { useProductStore } from '../stores/use-product-store'
 
 interface ProductFormDialogProps {
-  trigger: React.ReactNode
+  isOpen: boolean
+  onOpenChange: () => void
   product?: Product
 }
 
-export function ProductFormDialog({ trigger, product }: ProductFormDialogProps) {
+export function ProductFormDialog({
+  isOpen,
+  onOpenChange,
+  product
+}: ProductFormDialogProps) {
   const { createProduct, updateProduct } = useProductStore()
   const { fetchMaterials, materials } = useMaterialStore()
-  const [isOpen, setIsOpen] = useState(false)
 
   const isEditing = !!product
 
@@ -76,14 +79,27 @@ export function ProductFormDialog({ trigger, product }: ProductFormDialogProps) 
       await createProduct(values)
     }
     form.reset()
-    setIsOpen(false)
+    onOpenChange()
 
     toast.success('Produto cadastrado com sucesso!')
   }
 
+  useEffect(() => {
+    if (isOpen) {
+      form.reset({
+        name: product?.name ?? '',
+        price: product?.price ?? 0,
+        composition:
+          product?.composition.map((c) => ({
+            rawMaterialId: c.rawMaterial.id,
+            quantity: c.quantityRequired
+          })) ?? []
+      })
+    }
+  }, [isOpen, product, form])
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-137.5 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Produto</DialogTitle>
@@ -208,7 +224,7 @@ export function ProductFormDialog({ trigger, product }: ProductFormDialogProps) 
             </div>
 
             <div className="flex justify-end space-x-2 pt-4 border-t">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+              <Button type="button" variant="outline" onClick={onOpenChange}>
                 Cancelar
               </Button>
               <Button type="submit">{isEditing ? 'Atualizar' : 'Salvar'}</Button>

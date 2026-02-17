@@ -1,4 +1,5 @@
 import { PencilIcon, Trash2Icon } from 'lucide-react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,11 +10,27 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import type { RawMaterial } from '@/types'
 import { useMaterialStore } from '../stores/use-material-store'
 import { MaterialFormDialog } from './material-form-dialog'
 
 export function MaterialsTable() {
   const { materials, isLoading, deleteMaterial } = useMaterialStore()
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [selectedMaterial, setSelectedMaterial] = useState<RawMaterial | undefined>(
+    undefined
+  )
+
+  function handleEdit(material: RawMaterial) {
+    setSelectedMaterial(material)
+    setIsDialogOpen(true)
+  }
+
+  function handleCloseDialog() {
+    setIsDialogOpen(false)
+    setSelectedMaterial(undefined)
+  }
 
   async function handleDelete(materialId: number) {
     await deleteMaterial(materialId)
@@ -22,64 +39,68 @@ export function MaterialsTable() {
   }
 
   return (
-    <div className="border rounded-lg shadow-sm">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-25">ID</TableHead>
-            <TableHead>Nome do Insumo</TableHead>
-            <TableHead className="text-right">Qtd. em Estoque</TableHead>
-            <TableHead className="text-right">Ações</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {isLoading ? (
+    <>
+      <MaterialFormDialog
+        isOpen={isDialogOpen}
+        onOpenChange={handleCloseDialog}
+        material={selectedMaterial}
+      />
+
+      <div className="border rounded-lg shadow-sm">
+        <Table>
+          <TableHeader>
             <TableRow>
-              <TableCell colSpan={4} className="text-center py-6">
-                Carregando dados do servidor...
-              </TableCell>
+              <TableHead className="w-25">ID</TableHead>
+              <TableHead>Nome do Insumo</TableHead>
+              <TableHead className="text-right">Qtd. em Estoque</TableHead>
+              <TableHead className="text-right">Ações</TableHead>
             </TableRow>
-          ) : materials.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={4} className="text-center py-6">
-                Nenhum insumo cadastrado ainda.
-              </TableCell>
-            </TableRow>
-          ) : (
-            materials.map((material) => (
-              <TableRow key={material.id}>
-                <TableCell className="font-medium">{material.id}</TableCell>
-                <TableCell>{material.name}</TableCell>
-                <TableCell className="text-right">{material.stockQuantity}</TableCell>
-                <TableCell className="text-right">
-                  <div className="flex justify-end gap-1">
-                    <MaterialFormDialog
-                      material={material}
-                      trigger={
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
-                        >
-                          <PencilIcon className="size-4" />
-                        </Button>
-                      }
-                    />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                      onClick={() => handleDelete(material.id as number)}
-                    >
-                      <Trash2Icon className="size-4" />
-                    </Button>
-                  </div>
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center py-6">
+                  Carregando dados do servidor...
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
-    </div>
+            ) : materials.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center py-6">
+                  Nenhum insumo cadastrado ainda.
+                </TableCell>
+              </TableRow>
+            ) : (
+              materials.map((material) => (
+                <TableRow key={material.id}>
+                  <TableCell className="font-medium">{material.id}</TableCell>
+                  <TableCell>{material.name}</TableCell>
+                  <TableCell className="text-right">{material.stockQuantity}</TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                        onClick={() => handleEdit(material)}
+                      >
+                        <PencilIcon className="size-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => handleDelete(material.id as number)}
+                      >
+                        <Trash2Icon className="size-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </>
   )
 }
