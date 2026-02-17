@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -75,9 +76,10 @@ export function MaterialFormDialog({ trigger, material }: MaterialFormDialogProp
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
-          <DialogTitle>
+          <DialogTitle>Matéria-prima</DialogTitle>
+          <DialogDescription>
             {isEditing ? 'Atualizar Matéria-Prima' : 'Cadastrar Nova Matéria-Prima'}
-          </DialogTitle>
+          </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>

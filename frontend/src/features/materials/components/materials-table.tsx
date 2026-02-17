@@ -35,13 +35,13 @@ export function MaterialsTable() {
         <TableBody>
           {isLoading ? (
             <TableRow>
-              <TableCell colSpan={4} className="text-center py-6 text-slate-500">
+              <TableCell colSpan={4} className="text-center py-6">
                 Carregando dados do servidor...
               </TableCell>
             </TableRow>
           ) : materials.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={4} className="text-center py-6 text-slate-500">
+              <TableCell colSpan={4} className="text-center py-6">
                 Nenhum insumo cadastrado ainda.
               </TableCell>
             </TableRow>

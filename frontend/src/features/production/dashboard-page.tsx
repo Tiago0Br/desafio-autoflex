@@ -1,21 +1,8 @@
-import { DollarSignIcon, PackageIcon, TrendingUpIcon } from 'lucide-react'
 import { useEffect } from 'react'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table'
-import { formatCurrency } from '@/utils/format-currency'
+import { AlgorithmInfoCard } from './components/algorithm-info-card'
+import { ProductionPlanCard } from './components/production-plan-card'
+import { TotalItemsCard } from './components/total-items-card'
+import { TotalValueCard } from './components/total-value-card'
 import { useProductionStore } from './stores/use-production-store'
 
 export function DashboardPage() {
@@ -35,8 +22,6 @@ export function DashboardPage() {
     )
   }
 
-  const isPlanEmpty = !plan || plan.productionList.length === 0
-
   return (
     <div className="space-y-8">
       <div>
@@ -50,111 +35,16 @@ export function DashboardPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="shadow-md">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-primary">
-              Receita Total Estimada
-            </CardTitle>
-            <DollarSignIcon className="size-4 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-foreground">
-              {plan ? formatCurrency(plan.totalValue) : 'R$ 0,00'}
-            </div>
-            <p className="text-xs text-primary mt-1">
-              Priorizando produtos de maior valor
-            </p>
-          </CardContent>
-        </Card>
+        <TotalValueCard totalValue={plan?.totalValue} />
 
-        <Card className="shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total de Itens Produzidos
-            </CardTitle>
-            <PackageIcon className="size-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-foreground">
-              {plan ? plan.totalItems : 0}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Unidades prontas para venda
-            </p>
-          </CardContent>
-        </Card>
+        <TotalItemsCard totalItems={plan?.totalItems} />
 
-        <Card className="shadow-sm hidden lg:block">
-          <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Status do Algoritmo
-            </CardTitle>
-            <TrendingUpIcon className="size-4 text-emerald-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1">
-              Otimizado
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Algoritmo Guloso aplicado
-            </p>
-          </CardContent>
-        </Card>
+        <div className="hidden lg:block">
+          <AlgorithmInfoCard />
+        </div>
       </div>
 
-      <Card className="shadow-sm">
-        <CardHeader>
-          <CardTitle>Plano de Produção Detalhado</CardTitle>
-          <CardDescription>
-            Relação exata de quais produtos fabricar e suas respectivas quantidades para
-            atingir a receita máxima.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Produto Sugerido</TableHead>
-                <TableHead className="text-center">Quantidade</TableHead>
-                <TableHead className="text-right">Valor Unitário</TableHead>
-                <TableHead className="text-right font-bold">Subtotal</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {isPlanEmpty ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={4}
-                    className="text-center py-10 text-muted-foreground"
-                  >
-                    Estoque insuficiente para produzir qualquer item cadastrado.
-                    <br /> Adicione mais matérias-primas no sistema.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                plan.productionList.map((item) => (
-                  <TableRow key={item.productName}>
-                    <TableCell className="font-medium text-foreground">
-                      {item.productName}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <span className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-xs font-bold">
-                        {item.quantityToProduce} un
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right text-muted-foreground">
-                      {formatCurrency(item.unitPrice)}
-                    </TableCell>
-                    <TableCell className="text-right font-bold text-primary">
-                      {formatCurrency(item.subTotal)}
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <ProductionPlanCard productionList={plan?.productionList ?? []} />
     </div>
   )
 }
