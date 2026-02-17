@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -20,42 +19,65 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import type { RawMaterial } from '@/types'
 import { type MaterialFormValues, materialFormSchema } from '../schemas/material.schema'
 import { useMaterialStore } from '../stores/use-material-store'
 
-export function MaterialFormDialog() {
+interface MaterialFormDialogProps {
+  trigger: React.ReactNode
+  material?: RawMaterial
+}
+
+export function MaterialFormDialog({ trigger, material }: MaterialFormDialogProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const { createMaterial } = useMaterialStore()
+  const isEditing = !!material
+
+  const { createMaterial, updateMaterial } = useMaterialStore()
 
   const form = useForm<MaterialFormValues>({
     resolver: zodResolver(materialFormSchema),
     defaultValues: {
-      name: '',
-      stockQuantity: 0
+      name: material?.name ?? '',
+      stockQuantity: material?.stockQuantity ?? 0
     }
   })
 
+  useEffect(() => {
+    if (material) {
+      form.reset({
+        name: material.name,
+        stockQuantity: material.stockQuantity
+      })
+    }
+  }, [material, form])
+
   const onSubmit = async ({ name, stockQuantity }: MaterialFormValues) => {
-    await createMaterial({
-      name,
-      stockQuantity
-    })
+    if (isEditing && material?.id) {
+      await updateMaterial(material.id, {
+        name,
+        stockQuantity
+      })
+      toast.success('Matéria-prima atualizada com sucesso!')
+    } else {
+      await createMaterial({
+        name,
+        stockQuantity
+      })
+      toast.success('Matéria-prima cadastrada com sucesso!')
+    }
 
     form.reset()
     setIsOpen(false)
-    toast.success('Matéria-prima cadastrada com sucesso!')
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <PlusIcon className="mr-2 size-4" /> Novo Insumo
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
-          <DialogTitle>Cadastrar Nova Matéria-Prima</DialogTitle>
+          <DialogTitle>
+            {isEditing ? 'Atualizar Matéria-Prima' : 'Cadastrar Nova Matéria-Prima'}
+          </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -92,7 +114,7 @@ export function MaterialFormDialog() {
               <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
                 Cancelar
               </Button>
-              <Button type="submit">Salvar Insumo</Button>
+              <Button type="submit">{isEditing ? 'Atualizar' : 'Salvar'}</Button>
             </div>
           </form>
         </Form>

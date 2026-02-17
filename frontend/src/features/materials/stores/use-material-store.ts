@@ -7,6 +7,7 @@ interface MaterialStore {
   isLoading: boolean
   fetchMaterials: () => Promise<void>
   createMaterial: (material: RawMaterial) => Promise<void>
+  updateMaterial: (materialId: number, material: RawMaterial) => Promise<void>
   deleteMaterial: (materialId: number) => Promise<void>
 }
 
@@ -34,6 +35,15 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
     }
   },
 
+  updateMaterial: async (materialId: number, material: RawMaterial) => {
+    try {
+      await api.put(`/raw-materials/${materialId}`, material)
+      useMaterialStore.getState().fetchMaterials()
+    } catch (error) {
+      console.error('Erro ao atualizar a matéria-prima:', error)
+    }
+  },
+
   deleteMaterial: async (materialId: number) => {
     set({ isLoading: true })
     try {
@@ -43,7 +53,7 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
         isLoading: false
       }))
     } catch (error) {
-      console.error('Erro ao criar matéria-prima:', error)
+      console.error('Erro ao deletar a matéria-prima:', error)
       set({ isLoading: false })
     }
   }

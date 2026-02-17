@@ -1,4 +1,4 @@
-import { Trash2Icon } from 'lucide-react'
+import { PencilIcon, Trash2Icon } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
@@ -10,6 +10,7 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { useMaterialStore } from '../stores/use-material-store'
+import { MaterialFormDialog } from './material-form-dialog'
 
 export function MaterialsTable() {
   const { materials, isLoading, deleteMaterial } = useMaterialStore()
@@ -51,14 +52,28 @@ export function MaterialsTable() {
                 <TableCell>{material.name}</TableCell>
                 <TableCell className="text-right">{material.stockQuantity}</TableCell>
                 <TableCell className="text-right">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                    onClick={() => handleDelete(material.id as number)}
-                  >
-                    <Trash2Icon className="size-4" />
-                  </Button>
+                  <div className="flex justify-end gap-1">
+                    <MaterialFormDialog
+                      material={material}
+                      trigger={
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                        >
+                          <PencilIcon className="size-4" />
+                        </Button>
+                      }
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                      onClick={() => handleDelete(material.id as number)}
+                    >
+                      <Trash2Icon className="size-4" />
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))
