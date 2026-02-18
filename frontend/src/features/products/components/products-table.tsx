@@ -1,6 +1,5 @@
 import { PencilIcon, Trash2Icon } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -42,8 +41,6 @@ export function ProductsTable() {
 
   async function handleDelete(productId: number) {
     await deleteProduct(productId)
-
-    toast.success('Produto deletado!')
   }
 
   return (

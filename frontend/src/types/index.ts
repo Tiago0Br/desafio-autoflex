@@ -1,3 +1,15 @@
+export enum ApiErrorType {
+  VALIDATION = 'VALIDATION',
+  CONFLICT = 'CONFLICT',
+  NOT_FOUND = 'NOT_FOUND',
+  INTERNAL = 'INTERNAL'
+}
+
+export interface ApiErrorResponse {
+  error: string
+  type: ApiErrorType
+}
+
 export interface RawMaterial {
   id: number
   name: string

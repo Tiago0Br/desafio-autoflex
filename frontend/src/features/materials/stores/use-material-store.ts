@@ -1,5 +1,6 @@
+import { toast } from 'sonner'
 import { create } from 'zustand'
-import { api } from '@/services/api'
+import { api, getErrorMessageByError } from '@/services/api'
 import type { RawMaterial, SaveRawMaterial } from '@/types'
 
 interface MaterialStore {
@@ -21,8 +22,8 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
       const response = await api.get('/raw-materials')
       set({ materials: response.data, isLoading: false })
     } catch (error) {
-      console.error('Erro ao buscar matérias-primas:', error)
       set({ isLoading: false })
+      toast.error(getErrorMessageByError(error))
     }
   },
 
@@ -30,8 +31,9 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
     try {
       await api.post('/raw-materials', material)
       useMaterialStore.getState().fetchMaterials()
+      toast.success('Matéria-prima cadastrada com sucesso!')
     } catch (error) {
-      console.error('Erro ao criar matéria-prima:', error)
+      toast.error(getErrorMessageByError(error))
     }
   },
 
@@ -39,8 +41,9 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
     try {
       await api.put(`/raw-materials/${materialId}`, material)
       useMaterialStore.getState().fetchMaterials()
+      toast.success('Matéria-prima atualizada com sucesso!')
     } catch (error) {
-      console.error('Erro ao atualizar a matéria-prima:', error)
+      toast.error(getErrorMessageByError(error))
     }
   },
 
@@ -52,9 +55,10 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
         materials: state.materials.filter((material) => material.id !== materialId),
         isLoading: false
       }))
+      toast.success('Matéria-prima deletada!')
     } catch (error) {
-      console.error('Erro ao deletar a matéria-prima:', error)
       set({ isLoading: false })
+      toast.error(getErrorMessageByError(error))
     }
   }
 }))

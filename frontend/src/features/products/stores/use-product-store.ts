@@ -1,5 +1,6 @@
+import { toast } from 'sonner'
 import { create } from 'zustand'
-import { api } from '@/services/api'
+import { api, getErrorMessageByError } from '@/services/api'
 import type { Product, SaveProduct } from '@/types'
 
 interface ProductStore {
@@ -21,8 +22,8 @@ export const useProductStore = create<ProductStore>((set) => ({
       const response = await api.get('/products')
       set({ products: response.data, isLoading: false })
     } catch (error) {
-      console.error('Erro ao buscar produtos:', error)
       set({ isLoading: false })
+      toast.error(getErrorMessageByError(error))
     }
   },
 
@@ -30,8 +31,9 @@ export const useProductStore = create<ProductStore>((set) => ({
     try {
       await api.post('/products', productData)
       useProductStore.getState().fetchProducts()
+      toast.success('Produto cadastrado com sucesso!')
     } catch (error) {
-      console.error('Erro ao criar produto:', error)
+      toast.error(getErrorMessageByError(error))
     }
   },
 
@@ -39,8 +41,9 @@ export const useProductStore = create<ProductStore>((set) => ({
     try {
       await api.put(`/products/${productId}`, productData)
       useProductStore.getState().fetchProducts()
+      toast.success('Produto atualizado com sucesso!')
     } catch (error) {
-      console.error('Erro ao atualizar o produto:', error)
+      toast.error(getErrorMessageByError(error))
     }
   },
 
@@ -48,8 +51,9 @@ export const useProductStore = create<ProductStore>((set) => ({
     try {
       await api.delete(`/products/${productId}`)
       useProductStore.getState().fetchProducts()
+      toast.success('Produto deletado!')
     } catch (error) {
-      console.error('Erro ao deletar o produto:', error)
+      toast.error(getErrorMessageByError(error))
     }
   }
 }))

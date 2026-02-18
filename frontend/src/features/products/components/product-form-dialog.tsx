@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { PlusIcon, Trash2Icon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -80,8 +79,6 @@ export function ProductFormDialog({
     }
     form.reset()
     onOpenChange()
-
-    toast.success('Produto cadastrado com sucesso!')
   }
 
   useEffect(() => {

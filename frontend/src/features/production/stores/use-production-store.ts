@@ -1,5 +1,6 @@
+import { toast } from 'sonner'
 import { create } from 'zustand'
-import { api } from '@/services/api'
+import { api, getErrorMessageByError } from '@/services/api'
 import type { ProductionPlan } from '@/types'
 
 interface ProductionStore {
@@ -18,8 +19,8 @@ export const useProductionStore = create<ProductionStore>((set) => ({
       const response = await api.get('/products/production-plan')
       set({ plan: response.data, isLoading: false })
     } catch (error) {
-      console.error('Erro ao buscar plano de produção:', error)
       set({ isLoading: false })
+      toast.error(getErrorMessageByError(error))
     }
   }
 }))

@@ -1,6 +1,5 @@
 import { PencilIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
-import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -35,8 +34,6 @@ export function MaterialsTable() {
 
   async function handleDelete(materialId: number) {
     await deleteMaterial(materialId)
-
-    toast.success('Matéria-prima deletada!')
   }
 
   return (

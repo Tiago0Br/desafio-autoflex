@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -71,14 +70,12 @@ export function MaterialFormDialog({
         stockQuantity,
         unit
       })
-      toast.success('Matéria-prima atualizada com sucesso!')
     } else {
       await createMaterial({
         name,
         stockQuantity,
         unit
       })
-      toast.success('Matéria-prima cadastrada com sucesso!')
     }
 
     form.reset()
