@@ -7,6 +7,8 @@ import br.tiagolopes.model.RawMaterial;
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,6 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ProductionServiceTest {
     @Inject
     ProductionService productionService;
+
+    @BeforeEach
+    @Transactional
+    public void cleanUp() {
+        ProductComposition.deleteAll();
+        Product.deleteAll();
+        RawMaterial.deleteAll();
+    }
 
     @Test
     @TestTransaction
@@ -112,7 +122,6 @@ public class ProductionServiceTest {
         gourmetCake.persist();
 
         ProductionPlanDTO plan = productionService.calculateProductionPlan();
-        System.out.println(plan.productionList().toString());
 
         assertNotNull(plan, "Production plan should not be null.");
         assertEquals(4, plan.totalItems(), "It must produce exactly 4 items.");
