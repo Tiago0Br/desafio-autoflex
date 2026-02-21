@@ -44,4 +44,40 @@ describe('Raw Materials (E2E)', () => {
         .and('include.text', 'Matéria-prima cadastrada com sucesso!')
     })
   })
+
+  it('Should update a raw material', () => {
+    cy.fixture('update-raw-material').then((material) => {
+      cy.contains('[data-cy="material-name"]', material.name)
+        .parent()
+        .find('[data-cy="material-edit"]')
+        .click()
+
+      cy.get('[data-cy="material-form-dialog"]').should('be.visible')
+      cy.get('[data-cy="material-name-input"]').clear().type(material.data.name)
+      cy.get('[data-cy="material-stock-input"]').clear().type(material.data.stockQuantity)
+      cy.get('[data-cy="material-unit-select-button"]').click()
+      cy.get('[data-cy="material-unit-select-options"]')
+        .should('be.visible')
+        .contains('div[role=option]', `(${material.data.unit})`)
+        .click()
+
+      cy.get('[data-cy="material-form-submit"]').click()
+      cy.get('[data-sonner-toaster]')
+        .should('be.visible')
+        .and('include.text', 'Matéria-prima atualizada com sucesso!')
+    })
+  })
+
+  it('Should delete a raw material', () => {
+    cy.fixture('delete-raw-material').then((material) => {
+      cy.contains('[data-cy="material-name"]', material.name)
+        .parent()
+        .find('[data-cy="material-delete"]')
+        .click()
+
+      cy.get('[data-sonner-toaster]')
+        .should('be.visible')
+        .and('include.text', 'Matéria-prima deletada!')
+    })
+  })
 })

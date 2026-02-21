@@ -1,0 +1,8 @@
+{
+  "name": "Barra de chocolate",
+  "data": {
+    "name": "Barra de chocolate branco",
+    "stockQuantity": 30,
+    "unit": "UN"
+  }
+}
