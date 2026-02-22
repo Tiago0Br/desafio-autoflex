@@ -11,6 +11,7 @@ import {
   TableRow
 } from '@/components/ui/table'
 import type { Product } from '@/types'
+import { formatCurrency } from '@/utils/format-currency'
 import { useProductStore } from '../stores/use-product-store'
 import { ProductFormDialog } from './product-form-dialog'
 
@@ -97,14 +98,19 @@ export function ProductsTable() {
               </TableRow>
             ) : (
               products.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell className="font-medium">{product.id}</TableCell>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>R$ {product.price.toFixed(2)}</TableCell>
+                <TableRow key={product.id} data-cy="product-item">
+                  <TableCell className="font-medium" data-cy="product-id">
+                    {product.id}
+                  </TableCell>
+                  <TableCell data-cy="product-name">{product.name}</TableCell>
+                  <TableCell data-cy="product-price">
+                    {formatCurrency(product.price)}
+                  </TableCell>
                   <TableCell>
                     {product.composition.map((c) => (
                       <span
                         key={c.id}
+                        data-cy="product-composition"
                         className="inline-block bg-slate-100 rounded-full px-2 py-1 text-xs font-semibold text-slate-600 mr-2 mb-1"
                       >
                         {c.rawMaterial.name} ({c.quantityRequired} {c.rawMaterial.unit})
@@ -118,6 +124,7 @@ export function ProductsTable() {
                         size="icon"
                         className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
                         onClick={() => handleEdit(product)}
+                        data-cy="product-edit"
                       >
                         <PencilIcon className="size-4" />
                       </Button>
@@ -126,6 +133,7 @@ export function ProductsTable() {
                         size="icon"
                         className="text-red-500 hover:text-red-700 hover:bg-red-50"
                         onClick={() => handleDelete(product.id)}
+                        data-cy="product-delete"
                       >
                         <Trash2Icon className="size-4" />
                       </Button>

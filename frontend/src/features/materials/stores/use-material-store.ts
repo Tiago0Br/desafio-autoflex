@@ -2,7 +2,7 @@ import { toast } from 'sonner'
 import { create } from 'zustand'
 import { createMaterialRequest } from '@/http/create-material'
 import { deleteMaterialRequest } from '@/http/delete-material'
-import { getMaterialsRequest } from '@/http/get-material'
+import { getAllMaterialsRequest } from '@/http/get-all-materials'
 import { updateMaterialRequest } from '@/http/update-material'
 import { getErrorMessageByError } from '@/services/api'
 import type { RawMaterial, SaveRawMaterial } from '@/types'
@@ -23,7 +23,7 @@ export const useMaterialStore = create<MaterialStore>((set) => ({
   fetchMaterials: async () => {
     set({ isLoading: true })
     try {
-      const materials = await getMaterialsRequest()
+      const materials = await getAllMaterialsRequest()
       set({ materials, isLoading: false })
     } catch (error) {
       set({ isLoading: false })

@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "name": "Bolo de chocolate",
+    "price": 25.9,
+    "composition": [
+      {
+        "name": "Farinha de trigo",
+        "unit": "G",
+        "quantityRequired": 50
+      },
+      {
+        "name": "Ovo",
+        "unit": "UN",
+        "quantityRequired": 3
+      },
+      {
+        "name": "Barra de chocolate",
+        "unit": "UN",
+        "quantityRequired": 4
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Ovo de chocolate",
+    "price": 9.99,
+    "composition": [
+      {
+        "name": "Ovo",
+        "unit": "UN",
+        "quantityRequired": 1
+      },
+      {
+        "name": "Barra de chocolate",
+        "unit": "UN",
+        "quantityRequired": 1
+      }
+    ]
+  }
+]

@@ -1,6 +1,10 @@
 import { toast } from 'sonner'
 import { create } from 'zustand'
-import { api, getErrorMessageByError } from '@/services/api'
+import { createProductRequest } from '@/http/create-product'
+import { deleteProductRequest } from '@/http/delete-product'
+import { getAllProductsRequest } from '@/http/get-all-products'
+import { updateProductRequest } from '@/http/update-product'
+import { getErrorMessageByError } from '@/services/api'
 import type { Product, SaveProduct } from '@/types'
 
 interface ProductStore {
@@ -19,17 +23,17 @@ export const useProductStore = create<ProductStore>((set) => ({
   fetchProducts: async () => {
     set({ isLoading: true })
     try {
-      const response = await api.get('/products')
-      set({ products: response.data, isLoading: false })
+      const products = await getAllProductsRequest()
+      set({ products, isLoading: false })
     } catch (error) {
       set({ isLoading: false })
       toast.error(getErrorMessageByError(error))
     }
   },
 
-  createProduct: async (productData) => {
+  createProduct: async (product) => {
     try {
-      await api.post('/products', productData)
+      await createProductRequest({ product })
       useProductStore.getState().fetchProducts()
       toast.success('Produto cadastrado com sucesso!')
     } catch (error) {
@@ -37,9 +41,9 @@ export const useProductStore = create<ProductStore>((set) => ({
     }
   },
 
-  updateProduct: async (productId, productData) => {
+  updateProduct: async (productId, product) => {
     try {
-      await api.put(`/products/${productId}`, productData)
+      await updateProductRequest({ product, productId })
       useProductStore.getState().fetchProducts()
       toast.success('Produto atualizado com sucesso!')
     } catch (error) {
@@ -49,7 +53,7 @@ export const useProductStore = create<ProductStore>((set) => ({
 
   deleteProduct: async (productId) => {
     try {
-      await api.delete(`/products/${productId}`)
+      await deleteProductRequest({ productId })
       useProductStore.getState().fetchProducts()
       toast.success('Produto deletado!')
     } catch (error) {
